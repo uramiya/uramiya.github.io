@@ -1,0 +1,28 @@
+[
+  {
+    "name": "レニ",
+    "code": "BT01-001",
+    "rarity": "C",
+    "cost": 1,
+    "power": 2000,
+    "hit": 1,
+    "color": "fire",
+    "type": "ユニット/炎",
+    "text": "アタッカー　この攻撃が終わるまでパワー+2000。",
+    "flavor": "",
+    "image": "images/reni.png"
+  },
+  {
+    "name": "ネオン",
+    "code": "BT01-002",
+    "rarity": "C",
+    "cost": 1,
+    "power": 2000,
+    "hit": 1,
+    "color": "blue",
+    "type": "ユニット/水",
+    "text": "登場時、カードを1枚引く。",
+    "flavor": "",
+    "image": "images/neon.jpg"
+  }
+]

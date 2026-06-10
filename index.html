@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NivelScan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>NivelScan <span class="status-dot"></span></h1>
+</header>
+
+<main>
+  <section class="search-panel">
+    <div class="color-filters">
+      <button class="color-btn active" data-color="all">ALL</button>
+      <button class="color-btn fire" data-color="fire">炎</button>
+      <button class="color-btn green" data-color="green">森</button>
+      <button class="color-btn purple" data-color="purple">紫</button>
+      <button class="color-btn blue" data-color="blue">水</button>
+      <button class="color-btn yellow" data-color="yellow">雷</button>
+    </div>
+
+    <input type="text" id="nameSearchBox" placeholder="カード名で検索">
+    <input type="text" id="textSearchBox" placeholder="カードテキストで検索">
+
+    <div class="and-filters">
+      <select id="typeFilter">
+        <option value="">種別：すべて</option>
+        <option value="ユニット">ユニット</option>
+        <option value="イベント">イベント</option>
+        <option value="フィールド">フィールド</option>
+        <option value="リーダー">リーダー</option>
+      </select>
+
+      <select id="costFilter">
+        <option value="">コスト：すべて</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5以上</option>
+      </select>
+    </div>
+  </section>
+
+  <p id="resultCount"></p>
+
+  <section id="cardList" class="card-grid"></section>
+</main>
+
+<div id="cardModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" type="button" onclick="closeModal()">×</button>
+
+    <img id="modalImage" class="modal-image">
+
+    <h2 id="modalName"></h2>
+    <p id="modalCode"></p>
+
+    <div class="detail-grid">
+      <div>
+        <span>タイプ</span>
+        <strong id="modalType"></strong>
+      </div>
+      <div>
+        <span>色</span>
+        <strong id="modalColor"></strong>
+      </div>
+      <div>
+        <span>コスト</span>
+        <strong id="modalCost"></strong>
+      </div>
+      <div>
+        <span>パワー</span>
+        <strong id="modalPower"></strong>
+      </div>
+      <div>
+        <span>ヒット</span>
+        <strong id="modalHit"></strong>
+      </div>
+    </div>
+
+    <p id="modalText" class="effect-text"></p>
+    <p id="modalFlavor" class="flavor-text"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
