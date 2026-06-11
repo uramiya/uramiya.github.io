@@ -1438,5 +1438,17 @@
     "type": "アイテム",
     "text": "",
     "image": "images/ST09-017.webp"
+  },
+  {
+    "name": "",
+    "code": "ST09-017",
+    "rarity": "",
+    "cost": null,
+    "power": null,
+    "hit": null,
+    "color": "",
+    "type": "アイテム",
+    "text": "",
+    "image": "images/SB02-038.webp"
   }
 ]
