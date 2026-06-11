@@ -3,11 +3,11 @@ let currentCards = [];
 let selectedColor = "all";
 
 const colorNames = {
-  fire: "炎",
-  green: "森",
+  fire: "赤",
+  green: "緑",
   purple: "紫",
-  blue: "水",
-  yellow: "雷"
+  blue: "青",
+  yellow: "黄"
 };
 
 fetch("cards.json")
