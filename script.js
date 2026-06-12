@@ -3,7 +3,7 @@ let currentCards = [];
 let selectedColor = "all";
 
 const colorNames = {
-  fire: "赤",
+  red: "赤",
   green: "緑",
   purple: "紫",
   blue: "青",
@@ -31,8 +31,8 @@ fetch("cards.json")
 
 document.getElementById("nameSearchBox").addEventListener("input", searchCards);
 document.getElementById("textSearchBox").addEventListener("input", searchCards);
+document.getElementById("codeSearchBox").addEventListener("input", searchCards);
 document.getElementById("typeFilter").addEventListener("change", searchCards);
-document.getElementById("costFilter").addEventListener("change", searchCards);
 
 document.querySelectorAll(".color-btn").forEach(button => {
   button.addEventListener("click", () => {
@@ -49,25 +49,17 @@ document.querySelectorAll(".color-btn").forEach(button => {
 function searchCards() {
   const nameKeyword = document.getElementById("nameSearchBox").value.trim().toLowerCase();
   const textKeyword = document.getElementById("textSearchBox").value.trim().toLowerCase();
+  const codeKeyword = document.getElementById("codeSearchBox").value.trim().toLowerCase();
   const typeValue = document.getElementById("typeFilter").value;
-  const costValue = document.getElementById("costFilter").value;
 
   currentCards = cards.filter(card => {
     const nameMatch = !nameKeyword || card.name.toLowerCase().includes(nameKeyword);
     const textMatch = !textKeyword || card.text.toLowerCase().includes(textKeyword);
+    const codeMatch = !codeKeyword || card.code.toLowerCase().includes(codeKeyword);
     const colorMatch = selectedColor === "all" || card.color === selectedColor;
     const typeMatch = !typeValue || card.type.includes(typeValue);
 
-    let costMatch = true;
-    if (costValue !== "") {
-      if (costValue === "5") {
-        costMatch = Number(card.cost) >= 5;
-      } else {
-        costMatch = Number(card.cost) === Number(costValue);
-      }
-    }
-
-    return nameMatch && textMatch && colorMatch && typeMatch && costMatch;
+    return nameMatch && textMatch && codeMatch && colorMatch && typeMatch;
   });
 
   displayCards(currentCards);
@@ -121,3 +113,9 @@ function openModal(index) {
 function closeModal() {
   document.getElementById("cardModal").classList.remove("show");
 }
+
+document.getElementById("cardModal").addEventListener("click", event => {
+  if (event.target.id === "cardModal") {
+    closeModal();
+  }
+});
