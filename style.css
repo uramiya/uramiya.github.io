@@ -187,19 +187,23 @@ select {
 }
 
 .detail-grid strong {
-  font-size: 22px;
+  font-size: 18px;
 }
 
-.effect-text {
-  margin-top: 28px;
-  font-size: 20px;
-  line-height: 1.7;
-}
+
 
 .flavor-text {
   margin-top: 18px;
   color: #b8c0d0;
   font-style: italic;
+}
+
+.effect-text {
+  margin-top: 28px;
+  font-size: 15px;
+  line-height: 1.7;
+
+  white-space: pre-line;
 }
 
 @media (max-width: 520px) {
@@ -215,3 +219,4 @@ select {
     grid-template-columns: 1fr;
   }
 }
+
