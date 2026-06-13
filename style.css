@@ -18,16 +18,6 @@ h1 {
   margin: 0;
 }
 
-.status-dot {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  background: #20c46b;
-  border-radius: 50%;
-  margin-left: 8px;
-  box-shadow: 0 0 0 10px rgba(32, 196, 107, 0.18);
-}
-
 main {
   max-width: 980px;
   margin: 0 auto;
@@ -35,10 +25,19 @@ main {
 }
 
 .search-panel {
-  background: linear-gradient(180deg, #a61919, #6d0d16);
   border-radius: 22px;
   padding: 18px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background: linear-gradient(180deg, #a61919, #6d0d16);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.search-bg {
+  background-image:
+    linear-gradient(rgba(60, 0, 0, 0.35), rgba(60, 0, 0, 0.45)),
+    url("images/search-bg.png");
 }
 
 .color-filters {
@@ -190,8 +189,6 @@ select {
   font-size: 18px;
 }
 
-
-
 .flavor-text {
   margin-top: 18px;
   color: #b8c0d0;
@@ -202,9 +199,32 @@ select {
   margin-top: 28px;
   font-size: 15px;
   line-height: 1.7;
-
   white-space: pre-line;
 }
+
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  margin: 2px 4px 2px 0;
+  border-radius: 999px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.tag-attacker { background: #ef3f34; }
+.tag-trigger { background: #2f80ed; }
+.tag-mix { background: #8e44ad; }
+.tag-leveling { background: #f2994a; }
+.tag-entry { background: #f97316; }
+.tag-armed { background: #8b5a2b; }
+.tag-blocker { background: #27ae60; }
+.tag-passive { background: #596275; }
+.tag-active { background: #16a085; }
+.tag-exit { background: #34495e; }
+.tag-escape { background: #00a8a8; }
+.tag-default { background: #596275; }
 
 @media (max-width: 520px) {
   h1 {
@@ -212,11 +232,32 @@ select {
   }
 
   .card-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .zoom-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    top: 5px;
+    right: 5px;
   }
 
   .and-filters {
     grid-template-columns: 1fr;
   }
-}
 
+  .modal {
+    padding: 12px;
+  }
+
+  .modal-content {
+    padding: 22px;
+  }
+
+  #modalName {
+    font-size: 25px;
+  }
+}
