@@ -132,10 +132,10 @@ function decorateCardText(text) {
     if (label === "アタッカー") className = "tag-attacker";
     else if (label === "トリガー") className = "tag-trigger";
     else if (label === "ミックス") className = "tag-mix";
-    else if (label.startsWith("レベリング")) className = "tag-leveling";
+    else if (label.startsWith("クレジット")) className = "tag-leveling";
     else if (label === "エントリー") className = "tag-entry";
     else if (label === "アームド") className = "tag-armed";
-    else if (label === "ブロッカー") className = "tag-blocker";
+    else if (label === "ディフェンダー") className = "tag-blocker";
     else if (label === "パッシブ") className = "tag-passive";
     else if (label.startsWith("アクティブ")) className = "tag-active";
     else if (label === "エグジット") className = "tag-exit";
