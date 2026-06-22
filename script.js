@@ -157,3 +157,7 @@ function escapeHtml(text) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+document.getElementById("cardModal").addEventListener("dblclick", () => {
+  closeModal();
+});

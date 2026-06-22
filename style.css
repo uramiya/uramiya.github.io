@@ -78,11 +78,37 @@ main {
 input,
 select {
   width: 100%;
-  padding: 13px;
+  padding: 14px 16px;
   margin-top: 10px;
+
   border-radius: 999px;
-  border: 2px solid #e7c869;
+  border: 1px solid rgba(120, 210, 255, 0.45);
+
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+
   font-size: 16px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.08),
+    0 0 14px rgba(70, 180, 255, 0.12);
+
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(220, 240, 255, 0.75);
+}
+
+input:focus,
+select:focus {
+  border-color: rgba(120, 220, 255, 0.95);
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.12),
+    0 0 18px rgba(80, 190, 255, 0.45);
 }
 
 .and-filters {
@@ -144,6 +170,7 @@ select {
   position: fixed;
   inset: 0;
   /* background: rgba(3, 8, 18, 0.88); */
+  background: rgba(3, 8, 18, 0.88);
   z-index: 1000;
   overflow-y: auto;
   padding: 22px;
@@ -327,12 +354,19 @@ select {
 }
 
 .search-panel {
-  background:
-    linear-gradient(180deg, rgba(9, 20, 52, 0.95), rgba(7, 12, 30, 0.96));
-  border: 1px solid rgba(90, 180, 255, 0.35);
+  border-radius: 22px;
+  padding: 18px;
+
+  background: rgba(8, 18, 46, 0.62);
+
+  border: 1px solid rgba(120, 210, 255, 0.28);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
   box-shadow:
-    0 12px 28px rgba(0, 20, 70, 0.22),
-    inset 0 0 20px rgba(80, 180, 255, 0.08);
+    0 12px 28px rgba(0, 20, 70, 0.28),
+    inset 0 0 24px rgba(120, 210, 255, 0.08);
 }
 
 
@@ -355,4 +389,25 @@ select {
   .hero-overlay p {
     font-size: 13px;
   }
+}
+
+
+
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #cfe9ff 50%),
+    linear-gradient(135deg, #cfe9ff 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 14px) 50%;
+  background-size: 8px 8px, 8px 8px;
+  background-repeat: no-repeat;
+}
+
+select option {
+  background: #081024;
+  color: #ffffff;
 }
