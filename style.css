@@ -297,14 +297,14 @@ select:focus {
 }
 
 .tag-attacker { background: #ef3f34; }
-.tag-trigger { background: #2f80ed; }
+.tag-trigger { background: #b0a700; }
 .tag-mix { background: #8e44ad; }
 .tag-leveling { background: #f2994a; }
 .tag-entry { background: #f97316; }
 .tag-armed { background: #8b5a2b; }
 .tag-blocker { background: #27ae60; }
 .tag-passive { background: #5e005b; }
-.tag-active { background: #16a085; }
+.tag-active { background: #0453bc; }
 .tag-exit { background: #34495e; }
 .tag-escape { background: #00a8a8; }
 .tag-default { background: #596275; }
