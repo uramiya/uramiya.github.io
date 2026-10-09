@@ -1,97 +1,43 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ER Localization</title>
-  <link rel="stylesheet" href="style.css">
+  <title>翻訳</title>
+  <link rel="stylesheet" href="top.css">
 </head>
 <body>
 
-<header>
-  <div class="hero-banner">
-    <div class="hero-overlay">
-      <h1>ER Localization</h1>
-      <p>Eternal Return Card Database</p>
-    </div>
-  </div>
+    <header>
+  <h1>ニベルアリーナ翻訳</h1>
+  <p>ニベルアリーナ翻訳</p>
 </header>
 
 <main>
-  <section class="search-panel search-bg">
-    <div class="color-filters">
-      <button class="color-btn active" data-color="all">ALL</button>
-      <button class="color-btn fire" data-color="red">赤</button>
-      <button class="color-btn green" data-color="green">緑</button>
-      <button class="color-btn purple" data-color="purple">紫</button>
-      <button class="color-btn blue" data-color="blue">青</button>
-      <button class="color-btn yellow" data-color="yellow">黄</button>
-    </div>
+  <h2>SELECT TITLE</h2>
+  <p>検索するタイトルを選択してください</p>
 
-    <input type="text" id="nameSearchBox" placeholder="カード名で検索">
-    <input type="text" id="textSearchBox" placeholder="カードテキストで検索">
-    <input type="text" id="codeSearchBox" placeholder="カード番号で検索 例：BT01-001">
+  <div class="title-grid">
 
-    <div class="and-filters">
-      <select id="typeFilter">
-        <option value="">カードタイプ：すべて</option>
-        <option value="ユニット">ユニット</option>
-        <option value="スキル">スキル</option>
-        <option value="アイテム">アイテム</option>
-        <option value="リーダー">リーダー</option>
-      </select>
+    <a href="EternalReturn.html" class="title-card">
+      <img src="images/search-bg.png" alt="Eternal Return">
+      <div class="title-info">
+        <h3>Eternal Return</h3>
+        <span>カード検索 →</span>
+      </div>
+    </a>
 
-      <select id="costFilter">
-        <option value="">エキスパンション：すべて</option>
-        <option value="ST">ST</option>
-        <option value="BT">BT</option>
-        <option value="SB">SB</option>
-      </select>
-    </div>
-  </section>
+    <a href="blue_archive.html" class="title-card">
+      <img src="images/br-banner.jpg" alt="Eternal Return">
+      <div class="title-info">
+        <h3>ブルーアーカイブ -Blue Archive-</h3>
+        <span>カード検索 →</span>
+      </div>
+    </a>
 
-  <p id="resultCount"></p>
-
-  <section id="cardList" class="card-grid"></section>
+  </div>
 </main>
 
-<div id="cardModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" type="button" onclick="closeModal()">×</button>
-
-    <img id="modalImage" class="modal-image">
-
-    <h2 id="modalName"></h2>
-    <p id="modalCode"></p>
-
-    <div class="detail-grid">
-      <div>
-        <span>タイプ</span>
-        <strong id="modalType"></strong>
-      </div>
-      <div>
-        <span>色</span>
-        <strong id="modalColor"></strong>
-      </div>
-      <div>
-        <span>コスト</span>
-        <strong id="modalCost"></strong>
-      </div>
-      <div>
-        <span>パワー</span>
-        <strong id="modalPower"></strong>
-      </div>
-      <div>
-        <span>ヒット</span>
-        <strong id="modalHit"></strong>
-      </div>
-    </div>
-
-    <p id="modalText" class="effect-text"></p>
-    <p id="modalFlavor" class="flavor-text"></p>
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>

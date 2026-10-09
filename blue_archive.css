@@ -1,0 +1,615 @@
+
+/* ========================================
+   BLUE ARCHIVE CARD DATABASE
+   Sky Blue / White / Glass Theme
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: #254d68;
+
+  background:
+    radial-gradient(
+      ellipse at 85% 5%,
+      rgba(255,255,255,0.95),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #a6e4fa 0%,
+      #e0f5ff 38%,
+      #f8fcff 100%
+    );
+
+  background-attachment: fixed;
+}
+
+/* ===== 基本レイアウト ===== */
+
+header {
+  padding: 28px 22px 12px;
+}
+
+h1 {
+  font-size: 40px;
+  margin: 0;
+  color: #ffffff;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+/* ===== 検索パネル ===== */
+
+.search-panel {
+  border-radius: 22px;
+  padding: 18px;
+
+  background: rgba(255,255,255,0.72);
+
+  border: 1px solid rgba(255,255,255,0.95);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 12px 32px rgba(35,140,203,0.13),
+    inset 0 0 24px rgba(255,255,255,0.35);
+}
+
+/* 検索パネルに背景画像を使う場合 */
+.search-bg {
+  background-image:
+    linear-gradient(
+      rgba(232,248,255,0.78),
+      rgba(213,241,255,0.85)
+    ),
+    ;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ===== 色フィルター ===== */
+
+.color-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.color-btn {
+  border: 2px solid #9bd9f5;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+
+  padding: 8px 12px;
+
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 3px 10px rgba(40,145,205,0.10);
+
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.color-btn:hover {
+  transform: translateY(-2px);
+  background: #e5f7ff;
+}
+
+.color-btn.active {
+  outline: 3px solid #54c7f5;
+  outline-offset: 1px;
+  background: #dff5ff;
+
+  box-shadow: 0 0 15px rgba(65,185,240,0.25);
+}
+
+/* 色ごとの文字色 */
+.fire   { color: #e6462e; }
+.green  { color: #249c61; }
+.purple { color: #8650d3; }
+.blue   { color: #238ccc; }
+.yellow { color: #bd8700; }
+
+/* ===== 検索入力欄 ===== */
+
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 10px;
+
+  border-radius: 999px;
+  border: 1px solid #9bd9f5;
+
+  background: rgba(255,255,255,0.88);
+  color: #254d68;
+
+  font-size: 16px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 0 12px rgba(160,225,255,0.12),
+    0 3px 12px rgba(35,140,203,0.08);
+
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input::placeholder {
+  color: #779cb3;
+}
+
+input:focus,
+select:focus {
+  border-color: #39b9ed;
+
+  box-shadow:
+    0 0 0 3px rgba(57,185,237,0.16),
+    0 0 18px rgba(80,190,255,0.15);
+}
+
+.and-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ===== 検索結果 ===== */
+
+#resultCount {
+  padding: 10px 4px;
+  font-weight: bold;
+  color: #276c96;
+}
+
+/* ===== カード一覧 ===== */
+
+.card-grid {
+  background: rgba(255,255,255,0.58);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 22px;
+
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(145px, 1fr));
+
+  gap: 16px;
+
+  box-shadow: 0 10px 30px rgba(35,140,203,0.10);
+}
+
+.card {
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 12px rgba(30,100,150,0.15);
+
+  transition: transform 0.2s;
+}
+
+.card img:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== 拡大ボタン ===== */
+
+.zoom-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+
+  background: rgba(42,160,220,0.92);
+  color: #ffffff;
+
+  font-size: 20px;
+  cursor: pointer;
+
+  box-shadow: 0 3px 12px rgba(20,110,170,0.3);
+}
+
+.zoom-btn:hover {
+  background: #167bb5;
+}
+
+/* ===== 詳細モーダル ===== */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+
+  background: rgba(19,58,92,0.68);
+
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 22px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 460px;
+  margin: 0 auto;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.98),
+      rgba(227,246,255,0.98)
+    );
+
+  color: #254d68;
+
+  border-radius: 22px;
+  padding: 28px;
+
+  border: 2px solid rgba(110,205,245,0.75);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.8),
+    0 0 35px rgba(90,190,245,0.28),
+    0 18px 50px rgba(20,70,110,0.22);
+
+  backdrop-filter: blur(12px);
+}
+
+/* モーダル上部のアクセント */
+.modal-content::before {
+  content: "";
+
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 0;
+
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #40bff0,
+      transparent
+    );
+}
+
+/* 閉じるボタン */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+
+  border: none;
+  background: none;
+
+  color: #36a9df;
+
+  font-size: 44px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #0875b4;
+}
+
+/* カード画像 */
+.modal-image {
+  display: block;
+  width: 76%;
+  margin: 20px auto;
+  border-radius: 12px;
+
+  box-shadow: 0 6px 22px rgba(35,100,145,0.16);
+}
+
+/* カード名 */
+#modalName {
+  font-size: 30px;
+  margin-bottom: 8px;
+  color: #205b80;
+}
+
+/* カード番号 */
+#modalCode {
+  color: #678da6;
+  font-size: 18px;
+}
+
+/* ===== 詳細情報 ===== */
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.detail-grid span {
+  display: block;
+  color: #7396ad;
+  font-size: 14px;
+}
+
+.detail-grid strong {
+  font-size: 18px;
+  color: #205b80;
+}
+
+/* フレーバーテキスト */
+.flavor-text {
+  margin-top: 18px;
+  color: #648ba3;
+  font-style: italic;
+}
+
+/* 効果テキスト */
+.effect-text {
+  margin-top: 28px;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-line;
+  color: #254d68;
+}
+
+/* ===== 効果タグ ===== */
+
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  margin: 2px 4px 2px 0;
+
+  border-radius: 999px;
+  color: white;
+
+  font-weight: 700;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+/* 効果タグの色は従来どおり */
+.tag-attacker { background: #ef3f34; }
+.tag-trigger { background: #b0a700; }
+.tag-mix { background: #8e44ad; }
+.tag-leveling { background: #f2994a; }
+.tag-entry { background: #f97316; }
+.tag-armed { background: #8b5a2b; }
+.tag-blocker { background: #27ae60; }
+.tag-passive { background: #5e005b; }
+.tag-active { background: #0453bc; }
+.tag-exit { background: #34495e; }
+.tag-escape { background: #00a8a8; }
+.tag-default { background: #596275; }
+
+/* ===== ヒーローバナー ===== */
+
+.hero-banner {
+  height: 300px;
+  margin: 16px;
+  border-radius: 26px;
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(28,113,165,0.65),
+      rgba(80,190,235,0.12),
+      rgba(30,125,185,0.35)
+    ),
+    url("images/bluearchive-bg.jpg");
+
+  background-size: cover;
+  background-position: center center;
+
+  box-shadow:
+    0 14px 35px rgba(35,140,203,0.18);
+
+  border: 1px solid rgba(255,255,255,0.55);
+}
+
+.hero-overlay {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding: 26px;
+  color: white;
+}
+
+.hero-overlay h1 {
+  font-size: 48px;
+  margin: 0;
+  letter-spacing: 0.04em;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 3px 12px rgba(20,75,115,0.7);
+}
+
+.hero-overlay p {
+  margin-top: 8px;
+  font-size: 16px;
+
+  color: #f0faff;
+
+  text-shadow:
+    0 3px 10px rgba(20,75,115,0.65);
+}
+
+/* ===== セレクトボックス ===== */
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      #329bd0 50%
+    ),
+    linear-gradient(
+      135deg,
+      #329bd0 50%,
+      transparent 50%
+    );
+
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 14px) 50%;
+
+  background-size: 8px 8px, 8px 8px;
+  background-repeat: no-repeat;
+
+  padding-right: 42px;
+}
+
+select option {
+  background: #ffffff;
+  color: #254d68;
+}
+
+/* ===== スマートフォン ===== */
+
+@media (max-width: 520px) {
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .card-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .zoom-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    top: 5px;
+    right: 5px;
+  }
+
+  .and-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    padding: 12px;
+  }
+
+  .modal-content {
+    padding: 22px;
+  }
+
+  #modalName {
+    font-size: 25px;
+  }
+
+  .hero-banner {
+    height: 190px;
+    margin: 8px;
+    background-position: center top;
+  }
+
+  .hero-overlay {
+    padding: 18px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 32px;
+  }
+
+  .hero-overlay p {
+    font-size: 13px;
+  }
+}
+
+
+/* ==================================
+   検索窓の色合い調整
+   ================================== */
+
+/* カード名・テキスト・番号・セレクト */
+input,
+select {
+  background: #e8f6ff;
+  color: #174c70;
+
+  border: 1.5px solid #78bfe8;
+  border-radius: 999px;
+
+  box-shadow:
+    inset 0 2px 5px rgba(60, 145, 195, 0.06),
+    0 2px 6px rgba(40, 130, 185, 0.08);
+}
+
+/* 入力前の案内文字 */
+input::placeholder {
+  color: #527e9c;
+  opacity: 1;
+}
+
+/* 検索窓を選択したとき */
+input:focus,
+select:focus {
+  background: #ffffff;
+  color: #174c70;
+  border-color: #159cdb;
+
+  box-shadow:
+    0 0 0 3px rgba(21, 156, 219, 0.18);
+}
+
+/* プルダウンの選択肢 */
+select option {
+  background: #ffffff;
+  color: #174c70;
+}

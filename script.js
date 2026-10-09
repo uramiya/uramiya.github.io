@@ -10,24 +10,69 @@ const colorNames = {
   yellow: "黄"
 };
 
-fetch("cards.json")
-  .then(response => response.json())
-  .then(data => {
-    cards = data.map(card => ({
-      ...card,
-      name: card.name || "",
-      code: card.code || "",
-      rarity: card.rarity || "",
-      color: card.color || "",
-      type: card.type || "",
-      text: card.text || "",
-      flavor: card.flavor || "",
-      image: card.image || ""
-    }));
 
-    currentCards = cards;
-    displayCards(currentCards);
-  });
+/* ===================================
+   タイトル別カードデータ読み込み
+   =================================== */
+
+// HTMLからタイトルを取得
+const currentTitle = document.body.dataset.title;
+
+// タイトルごとのJSONファイル
+const titleFiles = {
+  "eternal-return": [
+    "data/Eternal_Return.json"
+  ],
+
+  "blue_archive": [
+    "data/blue_archive.json"
+  ]
+};
+
+// 対象タイトルのファイル一覧
+const cardFiles = titleFiles[currentTitle] || [];
+
+// JSONを読み込む
+Promise.all(
+  cardFiles.map(async file => {
+    const response = await fetch(file);
+
+    if (!response.ok) {
+      throw new Error(
+        `読み込み失敗: ${file} (${response.status})`
+      );
+    }
+
+    return response.json();
+  })
+)
+.then(results => {
+
+  // 複数JSONを1つの配列に結合
+  const allCards = results.flat();
+
+  cards = allCards.map(card => ({
+    ...card,
+    name: card.name || "",
+    code: card.code || "",
+    rarity: card.rarity || "",
+    color: card.color || "",
+    type: card.type || "",
+    text: card.text || "",
+    flavor: card.flavor || "",
+    image: card.image || ""
+  }));
+
+  currentCards = cards;
+
+  // カード一覧表示
+  searchCards();
+
+})
+.catch(error => {
+  console.error("カード読み込みエラー:", error);
+});
+
 
 document.getElementById("nameSearchBox").addEventListener("input", searchCards);
 document.getElementById("textSearchBox").addEventListener("input", searchCards);
