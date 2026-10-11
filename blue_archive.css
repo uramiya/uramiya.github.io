@@ -421,6 +421,7 @@ select:focus {
 .tag-exit { background: #34495e; }
 .tag-escape { background: #00a8a8; }
 .tag-default { background: #596275; }
+.tag-extra { background: #58dcd6; }
 
 /* ===== ヒーローバナー ===== */
 
@@ -612,4 +613,67 @@ select:focus {
 select option {
   background: #ffffff;
   color: #174c70;
+}
+
+
+/* コンパクトな共通フッター */
+
+.site-footer {
+  background: #eaf7ff;
+  border-top: 1px solid #c8e6f5;
+  box-shadow: 0 -3px 12px rgba(65, 145, 190, 0.05);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-link {
+  display: inline-block;
+  padding: 7px 12px;
+
+  color: #547d97;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  transition: 0.2s;
+}
+
+.footer-link:hover {
+  color: #176b9d;
+  background: rgba(125, 205, 245, 0.18);
+}
+
+.footer-link.active {
+  color: #277eac;
+  background: #d9f0fc;
+  border-color: #9bcfea;
+}
+
+/* スマホ */
+@media (max-width: 520px) {
+  .site-footer {
+    padding: 12px 6px;
+  }
+
+  .footer-nav {
+    gap: 2px;
+    flex-wrap: nowrap;
+  }
+
+  .footer-link {
+    padding: 7px 5px;
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
 }

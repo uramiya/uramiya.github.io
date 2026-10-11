@@ -448,3 +448,68 @@ select option {
   background: #081024;
   color: #ffffff;
 }
+
+
+/* コンパクトな共通フッター */
+
+.site-footer {
+  margin-top: 35px;
+  padding: 16px 10px;
+
+  background: #0b1730;
+  border-top: 1px solid rgba(110,195,255,0.3);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-link {
+  display: inline-block;
+  padding: 7px 12px;
+
+  color: #b6cde3;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  transition: 0.2s;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+  background: rgba(60,150,220,0.2);
+}
+
+.footer-link.active {
+  color: #9adfff;
+  background: rgba(35,115,180,0.3);
+  border-color: #62bff0;
+}
+
+/* スマホ */
+@media (max-width: 520px) {
+  .site-footer {
+    padding: 12px 6px;
+  }
+
+  .footer-nav {
+    gap: 2px;
+    flex-wrap: nowrap;
+  }
+
+  .footer-link {
+    padding: 7px 5px;
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+}

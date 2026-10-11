@@ -185,6 +185,7 @@ function decorateCardText(text) {
     else if (label.startsWith("アクティブ")) className = "tag-active";
     else if (label === "エグジット") className = "tag-exit";
     else if (label === "エスケープ") className = "tag-escape";
+    else if (label.startsWith("EX")) className = "tag-extra";
 
     return `<span class="tag ${className}">${label}</span>`;
   });
