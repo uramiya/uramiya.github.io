@@ -677,3 +677,117 @@ select option {
     white-space: nowrap;
   }
 }
+
+
+/* 所属タグ */
+
+.affiliation-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+
+.affiliation-tag {
+  display: inline-block;
+  padding: 5px 11px;
+
+  background: #e0f4ff;
+  color: #287aa7;
+
+  border: 1px solid #a6d8ef;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 520px) {
+  .affiliation-tag {
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+}
+
+
+/* ==================================
+   3項目横並び検索
+   ================================== */
+
+.and-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+/* 3つの検索欄 */
+.and-filters input,
+.and-filters select {
+  width: 100%;
+  min-width: 0;
+  margin-top: 8px;
+
+  padding: 12px 10px;
+  font-size: 13px;
+  border-radius: 14px;
+}
+
+/* 所属入力欄 */
+#affiliationSearchBox::placeholder {
+  color: #527e9c;
+}
+
+/* スマホでも3列 */
+@media (max-width: 520px) {
+  .and-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .and-filters input,
+  .and-filters select {
+    padding: 10px 6px;
+    font-size: 11px;
+    border-radius: 10px;
+  }
+
+  /* プルダウン矢印のスペース */
+  .and-filters select {
+    padding-right: 15px;
+    background-position:
+      calc(100% - 11px) 50%,
+      calc(100% - 6px) 50%;
+    background-size: 5px 5px, 5px 5px;
+  }
+}
+
+
+/* PC：3項目を横並び */
+.and-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.and-filters select {
+  width: 100%;
+  min-width: 0;
+  font-size: 13px;
+  padding: 12px 28px 12px 12px;
+}
+
+/* スマホ：3項目を縦並び */
+@media (max-width: 520px) {
+  .and-filters {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .and-filters select {
+    font-size: 15px;
+    padding: 13px 40px 13px 16px;
+    border-radius: 999px;
+  }
+}

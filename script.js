@@ -1,3 +1,4 @@
+
 let cards = [];
 let currentCards = [];
 let selectedColor = "all";
@@ -10,15 +11,12 @@ const colorNames = {
   yellow: "黄"
 };
 
-
 /* ===================================
    タイトル別カードデータ読み込み
    =================================== */
 
-// HTMLからタイトルを取得
 const currentTitle = document.body.dataset.title;
 
-// タイトルごとのJSONファイル
 const titleFiles = {
   "eternal-return": [
     "data/Eternal_Return.json"
@@ -29,10 +27,8 @@ const titleFiles = {
   ]
 };
 
-// 対象タイトルのファイル一覧
 const cardFiles = titleFiles[currentTitle] || [];
 
-// JSONを読み込む
 Promise.all(
   cardFiles.map(async file => {
     const response = await fetch(file);
@@ -47,13 +43,12 @@ Promise.all(
   })
 )
 .then(results => {
-
-  // 複数JSONを1つの配列に結合
   const allCards = results.flat();
 
   cards = allCards.map(card => ({
     ...card,
     name: card.name || "",
+    affiliation: card.affiliation || "",
     code: card.code || "",
     rarity: card.rarity || "",
     color: card.color || "",
@@ -64,22 +59,40 @@ Promise.all(
   }));
 
   currentCards = cards;
-
-  // カード一覧表示
+  createAffiliationOptions();
   searchCards();
-
-})
+  })
 .catch(error => {
   console.error("カード読み込みエラー:", error);
 });
 
+/* ===================================
+   検索イベント
+   =================================== */
 
-document.getElementById("nameSearchBox").addEventListener("input", searchCards);
-document.getElementById("textSearchBox").addEventListener("input", searchCards);
-document.getElementById("codeSearchBox").addEventListener("input", searchCards);
-document.getElementById("typeFilter").addEventListener("change", searchCards);
-document.getElementById("costFilter").addEventListener("change", searchCards);
+document.getElementById("nameSearchBox")
+  .addEventListener("input", searchCards);
 
+document.getElementById("textSearchBox")
+  .addEventListener("input", searchCards);
+
+document.getElementById("codeSearchBox")
+  .addEventListener("input", searchCards);
+
+document.getElementById("typeFilter")
+  .addEventListener("change", searchCards);
+
+document.getElementById("costFilter")
+  .addEventListener("change", searchCards);
+
+// 所属検索（ブルアカ専用）
+
+/* 所属プルダウンの変更時に検索を実行 */
+document.getElementById("affiliationFilter")
+  ?.addEventListener("change", searchCards);
+
+
+// 色フィルター
 document.querySelectorAll(".color-btn").forEach(button => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".color-btn").forEach(btn => {
@@ -92,26 +105,110 @@ document.querySelectorAll(".color-btn").forEach(button => {
   });
 });
 
+
+/* ===================================
+   所属プルダウン自動生成
+   =================================== */
+
+function createAffiliationOptions() {
+  const select = document.getElementById("affiliationFilter");
+
+  // 所属プルダウンがないページでは処理しない
+  if (!select) return;
+
+  // 選択肢を初期化
+  select.replaceChildren(new Option("所属：すべて", ""));
+
+  const affiliations = new Set();
+
+  cards.forEach(card => {
+    String(card.affiliation || "")
+      .split("/")
+      .map(item => item.trim())
+      .filter(Boolean)
+      .forEach(item => affiliations.add(item));
+  });
+
+  // 重複を除去して日本語順に並べる
+  const sorted = [...affiliations].sort((a, b) =>
+    a.localeCompare(b, "ja")
+  );
+
+  sorted.forEach(item => {
+    select.add(new Option(item, item));
+  });
+}
+
+
+/* ===================================
+   カード検索処理
+   =================================== */
+
+
 function searchCards() {
   const nameKeyword = document.getElementById("nameSearchBox").value.trim().toLowerCase();
   const textKeyword = document.getElementById("textSearchBox").value.trim().toLowerCase();
   const codeKeyword = document.getElementById("codeSearchBox").value.trim().toLowerCase();
+
   const typeValue = document.getElementById("typeFilter").value;
   const expansionValue = document.getElementById("costFilter").value;
 
-  currentCards = cards.filter(card => {
-    const nameMatch = !nameKeyword || card.name.toLowerCase().includes(nameKeyword);
-    const textMatch = !textKeyword || card.text.toLowerCase().includes(textKeyword);
-    const codeMatch = !codeKeyword || card.code.toLowerCase().includes(codeKeyword);
-    const colorMatch = selectedColor === "all" || card.color === selectedColor;
-    const typeMatch = !typeValue || card.type.includes(typeValue);
-    const expansionMatch = !expansionValue || card.code.toUpperCase().startsWith(expansionValue);
+  const affiliationValue =
+    document.getElementById("affiliationFilter")?.value.trim() || "";
 
-    return nameMatch && textMatch && codeMatch && colorMatch && typeMatch && expansionMatch;
+  currentCards = cards.filter(card => {
+    const nameMatch =
+      !nameKeyword ||
+      card.name.toLowerCase().includes(nameKeyword);
+
+    const textMatch =
+      !textKeyword ||
+      card.text.toLowerCase().includes(textKeyword);
+
+    const codeMatch =
+      !codeKeyword ||
+      card.code.toLowerCase().includes(codeKeyword);
+
+    const colorMatch =
+      selectedColor === "all" ||
+      card.color === selectedColor;
+
+    const typeMatch =
+      !typeValue ||
+      card.type.includes(typeValue);
+
+    const expansionMatch =
+      !expansionValue ||
+      card.code.toUpperCase().startsWith(expansionValue.toUpperCase());
+
+    // 所属を / で分割して完全一致判定
+    const affiliations = String(card.affiliation || "")
+      .split("/")
+      .map(item => item.trim())
+      .filter(Boolean);
+
+    const affiliationMatch =
+      !affiliationValue ||
+      affiliations.includes(affiliationValue);
+
+    return (
+      nameMatch &&
+      textMatch &&
+      codeMatch &&
+      colorMatch &&
+      typeMatch &&
+      expansionMatch &&
+      affiliationMatch
+    );
   });
 
   displayCards(currentCards);
 }
+
+
+/* ===================================
+   カード一覧表示
+   =================================== */
 
 function displayCards(list) {
   const cardList = document.getElementById("cardList");
@@ -141,19 +238,63 @@ function displayCards(list) {
   cardList.appendChild(fragment);
 }
 
+/* ===================================
+   カード詳細モーダル
+   =================================== */
+
 function openModal(index) {
   const card = currentCards[index];
 
   document.getElementById("modalImage").src = card.image;
   document.getElementById("modalName").textContent = card.name;
-  document.getElementById("modalCode").textContent = `${card.rarity}・${card.code}`;
-  document.getElementById("modalType").textContent = card.type;
-  document.getElementById("modalColor").textContent = colorNames[card.color] || card.color || "-";
-  document.getElementById("modalCost").textContent = card.cost ?? "-";
-  document.getElementById("modalPower").textContent = card.power ?? "-";
-  document.getElementById("modalHit").textContent = card.hit ?? "-";
-  document.getElementById("modalText").innerHTML = decorateCardText(card.text);
-  document.getElementById("modalFlavor").textContent = card.flavor || "";
+
+  // 所属をタグ形式で表示
+  const affiliationElement =
+    document.getElementById("modalAffiliation");
+
+  if (affiliationElement) {
+    affiliationElement.replaceChildren();
+
+    const affiliations = String(card.affiliation || "")
+      .split("/")
+      .map(item => item.trim())
+      .filter(Boolean);
+
+    affiliations.forEach(item => {
+      const tag = document.createElement("span");
+      tag.className = "affiliation-tag";
+      tag.textContent = item;
+
+      affiliationElement.appendChild(tag);
+    });
+
+    affiliationElement.style.display =
+      affiliations.length > 0 ? "flex" : "none";
+  }
+
+  document.getElementById("modalCode").textContent =
+    `${card.rarity}・${card.code}`;
+
+  document.getElementById("modalType").textContent =
+    card.type;
+
+  document.getElementById("modalColor").textContent =
+    colorNames[card.color] || card.color || "-";
+
+  document.getElementById("modalCost").textContent =
+    card.cost ?? "-";
+
+  document.getElementById("modalPower").textContent =
+    card.power ?? "-";
+
+  document.getElementById("modalHit").textContent =
+    card.hit ?? "-";
+
+  document.getElementById("modalText").innerHTML =
+    decorateCardText(card.text);
+
+  document.getElementById("modalFlavor").textContent =
+    card.flavor || "";
 
   document.getElementById("cardModal").classList.add("show");
 }
@@ -162,38 +303,83 @@ function closeModal() {
   document.getElementById("cardModal").classList.remove("show");
 }
 
-document.getElementById("cardModal").addEventListener("click", event => {
-  if (event.target.id === "cardModal") {
+// モーダル背景クリックで閉じる
+document.getElementById("cardModal")
+  .addEventListener("click", event => {
+    if (event.target.id === "cardModal") {
+      closeModal();
+    }
+  });
+
+// ダブルクリックで閉じる
+document.getElementById("cardModal")
+  .addEventListener("dblclick", () => {
     closeModal();
-  }
-});
+  });
+
+/* ===================================
+   カード効果テキスト装飾
+   =================================== */
 
 function decorateCardText(text) {
   let safeText = escapeHtml(text || "");
 
-  safeText = safeText.replace(/【([^】]+)】/g, (match, label) => {
-    let className = "tag-default";
+  safeText = safeText.replace(
+    /【([^】]+)】/g,
+    (match, label) => {
+      let className = "tag-default";
 
-    if (label === "アタッカー") className = "tag-attacker";
-    else if (label === "トリガー") className = "tag-trigger";
-    else if (label === "ミックス") className = "tag-mix";
-    else if (label.startsWith("クレジット")) className = "tag-leveling";
-    else if (label === "エントリー") className = "tag-entry";
-    else if (label === "アームド") className = "tag-armed";
-    else if (label === "ディフェンダー") className = "tag-blocker";
-    else if (label === "パッシブ") className = "tag-passive";
-    else if (label.startsWith("アクティブ")) className = "tag-active";
-    else if (label === "エグジット") className = "tag-exit";
-    else if (label === "エスケープ") className = "tag-escape";
-    else if (label.startsWith("EX")) className = "tag-extra";
+      if (label === "アタッカー")
+        className = "tag-attacker";
 
-    return `<span class="tag ${className}">${label}</span>`;
-  });
+      else if (label === "トリガー")
+        className = "tag-trigger";
 
-  safeText = safeText.replace(/\[トリガー\]/g, '<span class="tag tag-trigger">トリガー</span>');
+      else if (label === "ミックス")
+        className = "tag-mix";
+
+      else if (label.startsWith("クレジット"))
+        className = "tag-leveling";
+
+      else if (label === "エントリー")
+        className = "tag-entry";
+
+      else if (label === "アームド")
+        className = "tag-armed";
+
+      else if (label === "ディフェンダー")
+        className = "tag-blocker";
+
+      else if (label === "パッシブ")
+        className = "tag-passive";
+
+      else if (label.startsWith("アクティブ"))
+        className = "tag-active";
+
+      else if (label === "エグジット")
+        className = "tag-exit";
+
+      else if (label === "エスケープ")
+        className = "tag-escape";
+
+      else if (label.startsWith("EX"))
+        className = "tag-extra";
+
+      return `<span class="tag ${className}">${label}</span>`;
+    }
+  );
+
+  safeText = safeText.replace(
+    /\[トリガー\]/g,
+    '<span class="tag tag-trigger">トリガー</span>'
+  );
 
   return safeText;
 }
+
+/* ===================================
+   HTMLエスケープ
+   =================================== */
 
 function escapeHtml(text) {
   return String(text)
@@ -203,7 +389,3 @@ function escapeHtml(text) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
-
-document.getElementById("cardModal").addEventListener("dblclick", () => {
-  closeModal();
-});

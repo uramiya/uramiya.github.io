@@ -41,6 +41,13 @@
         <option value="リーダー">リーダー</option>
       </select>
 
+        <!-- 新規：所属 -->
+      <!-- 所属：JSONから自動生成 -->
+      <select id="affiliationFilter">
+        <option value="">所属：すべて</option>
+      </select>
+
+
       <select id="costFilter">
         <option value="">エキスパンション：すべて</option>
         <option value="ST">ST</option>
@@ -62,7 +69,9 @@
     <img id="modalImage" class="modal-image">
 
     <h2 id="modalName"></h2>
+    <div id="modalAffiliation" class="affiliation-tags"></div>
     <p id="modalCode"></p>
+    
 
     <div class="detail-grid">
       <div>
@@ -98,7 +107,7 @@
 <footer class="site-footer">
   <nav class="footer-nav">
     <a href="index.html" class="footer-link">TOP</a>
-    <a href="EternalReturn.html" class="footer-link">ETERNAL RETURN</a>
+    <a href="eternal_return.html" class="footer-link">ETERNAL RETURN</a>
     <a href="blue_archive.html" class="footer-link active">BLUE ARCHIVE</a>
   </nav>
 </footer>
