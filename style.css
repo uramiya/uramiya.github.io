@@ -513,3 +513,42 @@ select option {
     white-space: nowrap;
   }
 }
+
+
+/* ==================================
+   スマホ用フッター操作性改善
+   ================================== */
+
+@media (max-width: 520px) {
+
+  .site-footer {
+    margin-top: 30px;
+
+    /* 上下の余白を広げる */
+    padding: 18px 10px 36px;
+
+    /* iPhoneの画面下部にも対応 */
+    padding-bottom: calc(
+      36px + env(safe-area-inset-bottom)
+    );
+  }
+
+  .footer-nav {
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .footer-link {
+    /* タップしやすい高さ */
+    min-height: 44px;
+
+    padding: 12px 8px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}
