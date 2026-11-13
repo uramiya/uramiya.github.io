@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ER Localization</title>
+  <meta name="description" content="Eternal Returnのカードを名前・効果・番号から検索できるカードデータベース">
+  <meta name="theme-color" content="#182b5f">
+  <title>Eternal Return カード検索 | ER Localization</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-title="eternal-return">
@@ -18,88 +20,97 @@
 </header>
 
 <main>
-  <section class="search-panel search-bg">
-    <div class="color-filters">
-      <button class="color-btn active" data-color="all">ALL</button>
-      <button class="color-btn fire" data-color="red">赤</button>
-      <button class="color-btn green" data-color="green">緑</button>
-      <button class="color-btn purple" data-color="purple">紫</button>
-      <button class="color-btn blue" data-color="blue">青</button>
-      <button class="color-btn yellow" data-color="yellow">黄</button>
+  <section class="search-panel" aria-label="カード検索">
+    <div class="keyword-row">
+      <label class="sr-only" for="keywordSearchBox">フリーワード検索</label>
+      <input type="search" id="keywordSearchBox" placeholder="名前・効果・番号で検索" autocomplete="off" enterkeyhint="search">
+      <button type="button" id="filterToggle" class="filter-toggle" aria-expanded="false" aria-controls="advancedFilters">
+        絞り込み<span id="filterBadge" class="filter-badge" hidden></span>
+      </button>
     </div>
 
-    <input type="text" id="nameSearchBox" placeholder="カード名で検索">
-    <input type="text" id="textSearchBox" placeholder="カードテキストで検索">
-    <input type="text" id="codeSearchBox" placeholder="カード番号で検索 例：BT01-001">
+    <div class="color-filters" role="group" aria-label="色で絞り込み（複数選択可）">
+      <button type="button" class="color-btn active" data-color="all">ALL</button>
+      <button type="button" class="color-btn fire" data-color="red"><span class="dot"></span>赤</button>
+      <button type="button" class="color-btn green" data-color="green"><span class="dot"></span>緑</button>
+      <button type="button" class="color-btn purple" data-color="purple"><span class="dot"></span>紫</button>
+      <button type="button" class="color-btn blue" data-color="blue"><span class="dot"></span>青</button>
+      <button type="button" class="color-btn yellow" data-color="yellow"><span class="dot"></span>黄</button>
+      <span class="color-hint">複数選べます</span>
+    </div>
 
-    <div class="and-filters">
-      <select id="typeFilter">
-        <option value="">カードタイプ：すべて</option>
-        <option value="ユニット">ユニット</option>
-        <option value="スキル">スキル</option>
-        <option value="アイテム">アイテム</option>
-        <option value="リーダー">リーダー</option>
-      </select>
+    <div id="advancedFilters" class="advanced-filters">
+      <div class="cost-row" role="group" aria-label="コストで絞り込み">
+        <span class="cost-label">コスト</span>
+        <button type="button" class="cost-chip active" data-cost="all">すべて</button>
+        <button type="button" class="cost-chip" data-cost="0">0</button>
+        <button type="button" class="cost-chip" data-cost="1">1</button>
+        <button type="button" class="cost-chip" data-cost="2">2</button>
+        <button type="button" class="cost-chip" data-cost="3">3</button>
+        <button type="button" class="cost-chip" data-cost="4">4</button>
+        <button type="button" class="cost-chip" data-cost="5plus">5+</button>
+      </div>
+      <div id="keywordWrap" class="keyword-wrap">
+        <span class="cost-label">キーワード能力（複数選択＝すべて含む）</span>
+        <div id="keywordChips" class="keyword-chips"></div>
+      </div>
 
-            <!-- 所属：JSONから自動生成 -->
-      <select id="affiliationFilter">
-        <option value="">所属：すべて</option>
-      </select>
+      <label class="sr-only" for="nameSearchBox">カード名で検索</label>
+      <input type="search" id="nameSearchBox" placeholder="カード名で検索" autocomplete="off">
+      <label class="sr-only" for="textSearchBox">カードテキストで検索</label>
+      <input type="search" id="textSearchBox" placeholder="カードテキストで検索" autocomplete="off">
+      <label class="sr-only" for="codeSearchBox">カード番号で検索</label>
+      <input type="search" id="codeSearchBox" placeholder="カード番号で検索 例：BT05-001" autocomplete="off">
 
-      <select id="costFilter">
-        <option value="">エキスパンション：すべて</option>
-        <option value="ST">ST</option>
-        <option value="BT">BT</option>
-        <option value="SB">SB</option>
-      </select>
+      <div class="and-filters">
+        <select id="typeFilter" aria-label="カードタイプ">
+          <option value="">タイプ：すべて</option>
+          <option value="ユニット">ユニット</option>
+          <option value="スキル">スキル</option>
+          <option value="アイテム">アイテム</option>
+          <option value="リーダー">リーダー</option>
+        </select>
+
+        <span id="affiliationWrap">
+          <select id="affiliationFilter" aria-label="所属">
+            <option value="">所属：すべて</option>
+          </select>
+        </span>
+
+        <select id="rarityFilter" aria-label="レアリティ">
+          <option value="">レアリティ：すべて</option>
+        </select>
+
+        <select id="setFilter" aria-label="収録弾">
+          <option value="">収録弾：すべて</option>
+        </select>
+
+      </div>
+
+      <button type="button" id="resetFiltersBtn" class="reset-btn">条件をすべてリセット</button>
     </div>
   </section>
 
-  <p id="resultCount"></p>
-
-  <section id="cardList" class="card-grid"></section>
-</main>
-
-<div id="cardModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" type="button" onclick="closeModal()">×</button>
-
-    <img id="modalImage" class="modal-image">
-
-    <h2 id="modalName"></h2>
-    <p id="modalCode"></p>
-
-    <div class="detail-grid">
-      <div>
-        <span>タイプ</span>
-        <strong id="modalType"></strong>
-      </div>
-      <div>
-        <span>色</span>
-        <strong id="modalColor"></strong>
-      </div>
-      <div>
-        <span>コスト</span>
-        <strong id="modalCost"></strong>
-      </div>
-      <div>
-        <span>パワー</span>
-        <strong id="modalPower"></strong>
-      </div>
-      <div>
-        <span>ヒット</span>
-        <strong id="modalHit"></strong>
-      </div>
+  <div class="result-bar">
+    <p id="resultCount" aria-live="polite">読み込み中…</p>
+    <div class="view-toggle" role="group" aria-label="表示切り替え">
+      <button type="button" class="view-btn active" data-view="grid">グリッド</button>
+      <button type="button" class="view-btn" data-view="list">リスト</button>
     </div>
-
-    <p id="modalText" class="effect-text"></p>
-    <p id="modalFlavor" class="flavor-text"></p>
   </div>
-</div>
 
-<script src="script.js"></script>
-</body>
+  <div id="loadError" class="load-error" hidden>
+    カードデータの読み込みに失敗しました。通信環境を確認して、ページを再読み込みしてください。
+  </div>
 
+  <section id="cardList" class="card-grid" data-view="grid"></section>
+
+  <div id="emptyState" class="empty-state" hidden>
+    <p>条件に合うカードが見つかりませんでした。</p>
+    <button type="button" id="emptyResetBtn" class="reset-btn">条件をリセットする</button>
+  </div>
+
+</main>
 
 <footer class="site-footer">
   <nav class="footer-nav">
@@ -109,5 +120,36 @@
   </nav>
 </footer>
 
+<div id="cardModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal-content">
+    <button class="close-btn" type="button" aria-label="閉じる">×</button>
 
+    <img id="modalImage" class="modal-image" alt="">
+
+    <div class="modal-nav">
+      <button type="button" id="prevCardBtn" class="nav-btn">← 前のカード</button>
+      <span id="modalCounter"></span>
+      <button type="button" id="nextCardBtn" class="nav-btn">次のカード →</button>
+    </div>
+
+    <h2 id="modalName"></h2>
+    <div id="modalAffiliation" class="affiliation-tags"></div>
+    <p id="modalCode"></p>
+
+    <div class="detail-grid">
+      <div><span>タイプ</span><strong id="modalType"></strong></div>
+      <div><span>色</span><strong id="modalColor"></strong></div>
+      <div><span>コスト</span><strong id="modalCost"></strong></div>
+      <div><span>パワー</span><strong id="modalPower"></strong></div>
+      <div><span>ヒット</span><strong id="modalHit"></strong></div>
+    </div>
+
+    <p id="modalText" class="effect-text"></p>
+    <p id="modalFlavor" class="flavor-text"></p>
+    <p class="swipe-hint">左右スワイプで前後へ移動／ダブルクリックで閉じます</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>

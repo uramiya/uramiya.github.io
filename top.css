@@ -1,11 +1,11 @@
-
-* {
-  box-sizing: border-box;
-}
+/* カード検索 改修版 TOP（2026-11-11）モバイルファースト */
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: system-ui, sans-serif;
   background: linear-gradient(160deg, #172c59, #050a18);
   color: white;
@@ -13,6 +13,7 @@ body {
 
 header {
   text-align: center;
+  padding: 36px 16px 0;
 }
 
 header h1 {
@@ -24,25 +25,26 @@ header h1 {
 
 header p {
   color: #a9c4e6;
+  margin: 10px 0 0;
 }
 
 main {
+  flex: 1;
+  width: 100%;
   max-width: 1050px;
   margin: auto;
-  padding: 25px 20px;
-}
-
-
-main > p {
-  text-align: center;
-  color: #a9c4e6;
-  margin-bottom: 30px;
+  padding: 24px 16px 30px;
 }
 
 .title-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .title-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  main { padding: 25px 20px 40px; }
 }
 
 .title-card {
@@ -56,46 +58,63 @@ main > p {
   transition: transform .2s, box-shadow .2s;
 }
 
-.title-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(80, 180, 255, .35);
+.title-card:active { transform: scale(0.99); }
+
+@media (hover: hover) {
+  .title-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(80, 180, 255, .35);
+  }
 }
 
-.title-card img,
-.placeholder {
+.title-card img {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-.placeholder {
-  display: grid;
-  place-items: center;
-  background: #243755;
-  color: #a9c4e6;
-  letter-spacing: 3px;
+.title-info { padding: 18px; }
+.title-info h2 { margin: 0 0 8px; font-size: 20px; }
+.title-info span { color: #8acbff; }
+
+/* フッター（検索ページと共通） */
+.site-footer {
+  padding: 18px 10px calc(20px + env(safe-area-inset-bottom));
+  background: #0b1730;
+  border-top: 1px solid rgba(110,195,255,0.3);
 }
 
-.title-info {
-  padding: 18px;
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
 }
 
-.title-info h2 {
-  margin: 0 0 8px;
+.footer-link {
+  min-height: 44px;
+  padding: 10px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #b6cde3;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  white-space: nowrap;
 }
 
-.title-info span {
-  color: #8acbff;
+.footer-link.active {
+  color: #9adfff;
+  background: rgba(35,115,180,0.3);
+  border-color: #62bff0;
 }
 
-@media (max-width: 600px) {
-  .title-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  header {
-    padding-top: 35px;
-  }
+@media (min-width: 700px) {
+  .footer-link { font-size: 12px; padding: 8px 14px; }
 }
