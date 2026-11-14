@@ -1,20 +1,4 @@
-/* =====================================================
-   TOPページ 改修版 v8（2026-11-14）
-   目次・台帳のようなフラットなデザイン。
-   グラデーション／発光／ガラス表現は使わない。
-   ===================================================== */
-
-:root {
-  --paper: #f4f1ea;
-  --ink: #20262e;
-  --sub: #68707c;
-  --line: #ddd6c7;
-  --card-bg: #fbf9f4;
-  --er: #7e2128;
-  --ba: #1f6f9e;
-  --footer-bg: #20262e;
-}
-
+/* カード検索 改修版 TOP（2026-11-11）モバイルファースト */
 * { box-sizing: border-box; }
 
 body {
@@ -22,173 +6,83 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans",
-    "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
-  background: var(--paper);
-  color: var(--ink);
+  font-family: system-ui, sans-serif;
+  background: linear-gradient(160deg, #172c59, #050a18);
+  color: white;
 }
 
-/* ===== ヘッダー ===== */
-.site-header {
-  width: 100%;
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 44px 20px 6px;
+header {
+  text-align: center;
+  padding: 36px 16px 0;
 }
 
-.site-kicker {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--sub);
-}
-
-.site-header h1 {
+header h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: 3px;
   margin: 0;
-  font-family: "Hiragino Mincho ProN", "Yu Mincho", YuMincho,
-    "Noto Serif JP", serif;
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1.3;
+  color: #e0efff;
 }
 
-.site-lead {
-  margin: 14px 0 0;
-  max-width: 34em;
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--sub);
+header p {
+  color: #a9c4e6;
+  margin: 10px 0 0;
 }
 
-/* ===== 本文 ===== */
 main {
   flex: 1;
   width: 100%;
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 26px 20px 40px;
+  max-width: 1050px;
+  margin: auto;
+  padding: 24px 16px 30px;
 }
 
-.index-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin: 0 0 4px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--ink);
-  font-size: 13px;
-  font-weight: 700;
+.title-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-.index-label-en {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--sub);
-}
-
-/* ===== タイトル一覧（罫線で区切る台帳式） ===== */
-.title-list {
-  border-bottom: 1px solid var(--line);
+@media (min-width: 640px) {
+  .title-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  main { padding: 25px 20px 40px; }
 }
 
 .title-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  padding: 20px 2px 22px;
-  border-top: 1px solid var(--line);
-  color: inherit;
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #122344;
+  border: 1px solid #41699c;
+  color: white;
   text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
 }
 
-.title-card:first-child { border-top: none; }
+.title-card:active { transform: scale(0.99); }
+
+@media (hover: hover) {
+  .title-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(80, 180, 255, .35);
+  }
+}
 
 .title-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 8;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: #e9e4d8;
 }
 
-.title-no {
-  margin: 0 0 6px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-.title-er .title-no, .title-er .title-go { color: var(--er); }
-.title-ba .title-no, .title-ba .title-go { color: var(--ba); }
+.title-info { padding: 18px; }
+.title-info h2 { margin: 0 0 8px; font-size: 20px; }
+.title-info span { color: #8acbff; }
 
-.title-info h2 {
-  margin: 0;
-  font-family: "Hiragino Mincho ProN", "Yu Mincho", YuMincho,
-    "Noto Serif JP", serif;
-  font-size: 25px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-.title-sub {
-  font-size: 17px;
-  color: var(--sub);
-}
-
-.title-data {
-  margin: 8px 0 0;
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: var(--sub);
-  min-height: 1.7em;
-}
-
-.title-go {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-}
-
-@media (hover: hover) {
-  .title-card:hover { background: var(--card-bg); }
-  .title-card:hover .title-go { text-decoration-thickness: 2px; }
-}
-
-.title-card:active { background: var(--card-bg); }
-
-.index-note {
-  margin: 14px 0 0;
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--sub);
-}
-
-@media (min-width: 720px) {
-  .site-header { padding-top: 60px; }
-  .site-header h1 { font-size: 42px; }
-
-  .title-card {
-    grid-template-columns: 320px 1fr;
-    align-items: center;
-    gap: 26px;
-    padding: 26px 6px 28px;
-  }
-
-  .title-info h2 { font-size: 29px; }
-  .title-sub { font-size: 19px; }
-}
-
-/* ===== フッター ===== */
+/* フッター（検索ページと共通） */
 .site-footer {
   padding: 18px 10px calc(20px + env(safe-area-inset-bottom));
-  background: var(--footer-bg);
+  background: #0b1730;
+  border-top: 1px solid rgba(110,195,255,0.3);
 }
 
 .footer-nav {
@@ -205,19 +99,20 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #b9c1cc;
+  color: #b6cde3;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2px;
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 8px;
   white-space: nowrap;
 }
 
 .footer-link.active {
-  color: #ffffff;
-  border-color: #8b95a3;
+  color: #9adfff;
+  background: rgba(35,115,180,0.3);
+  border-color: #62bff0;
 }
 
 @media (min-width: 700px) {
