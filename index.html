@@ -3,38 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="カード検索サイト。タイトルを選んでカードデータベースを開けます">
-  <meta name="theme-color" content="#172c59">
-  <title>カード検索 | SELECT TITLE</title>
+  <meta name="description" content="ニベルアリーナのカードを日本語訳で検索できる個人制作のデータベース。Eternal Return／ブルーアーカイブ">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>カードデータベース | uramiya.github.io</title>
   <link rel="stylesheet" href="top.css">
 </head>
 <body>
 
-<header>
-  <h1>SELECT TITLE</h1>
-  <p>タイトルを選択してください</p>
+<header class="site-header">
+  <p class="site-kicker">uramiya.github.io</p>
+  <h1>カードデータベース</h1>
+  <p class="site-lead">ニベルアリーナのカードを、日本語訳で検索できるようにまとめた個人制作のデータベースです。調べたいタイトルを選んでください。</p>
 </header>
 
 <main>
-  <div class="title-grid">
+  <p class="index-label"><span>タイトル一覧</span><span class="index-label-en">INDEX</span></p>
 
-    <a href="eternal_return.html" class="title-card">
+  <div class="title-list">
+
+    <a href="eternal_return.html" class="title-card title-er">
       <img src="images/search-bg.png" alt="Eternal Return">
       <div class="title-info">
+        <p class="title-no">01 · ETERNAL RETURN</p>
         <h2>Eternal Return</h2>
-        <span>カード検索 →</span>
+        <p class="title-data" data-source="data/Eternal_Return.json">収録データを読み込んでいます</p>
+        <span class="title-go">カード検索 →</span>
       </div>
     </a>
 
-    <a href="blue_archive.html" class="title-card">
+    <a href="blue_archive.html" class="title-card title-ba">
       <img src="images/br-banner.jpg" alt="ブルーアーカイブ -Blue Archive-">
       <div class="title-info">
-        <h2>ブルーアーカイブ -Blue Archive-</h2>
-        <span>カード検索 →</span>
+        <p class="title-no">02 · BLUE ARCHIVE</p>
+        <h2>ブルーアーカイブ <span class="title-sub">-Blue Archive-</span></h2>
+        <p class="title-data" data-source="data/blue_archive.json">収録データを読み込んでいます</p>
+        <span class="title-go">カード検索 →</span>
       </div>
     </a>
 
   </div>
+
+  <p class="index-note">収録数と収録弾は、各タイトルのデータから自動で表示しています。</p>
 </main>
 
 <footer class="site-footer">
@@ -45,5 +54,30 @@
   </nav>
 </footer>
 
+<script>
+// 各タイトルの収録数と収録弾をデータから読み取って表示する
+(function () {
+  var ranks = { ST: 0, BT: 1, SB: 2 };
+  document.querySelectorAll(".title-data").forEach(function (el) {
+    fetch(el.dataset.source)
+      .then(function (res) { return res.json(); })
+      .then(function (cards) {
+        var sets = new Map();
+        cards.forEach(function (card) {
+          var m = String(card.code || "").toUpperCase().match(/^([A-Z]+)(\d+)/);
+          if (m) sets.set(m[1] + m[2], { prefix: m[1], num: Number(m[2]) });
+        });
+        var ordered = [...sets.entries()].sort(function (a, b) {
+          var ra = ranks[a[1].prefix] ?? 3, rb = ranks[b[1].prefix] ?? 3;
+          return ra - rb || a[1].num - b[1].num;
+        }).map(function (entry) { return entry[0]; });
+        el.textContent = "全" + cards.length + "種 ／ " + ordered.join("・");
+      })
+      .catch(function () {
+        el.textContent = "";
+      });
+  });
+})();
+</script>
 </body>
 </html>
