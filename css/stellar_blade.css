@@ -1,43 +1,41 @@
 /* =====================================================
    カード検索 改修版（2026-11-11）モバイルファースト
-   テーマ差分は :root の変数とヒーロー画像だけ。
-   style.css（Eternal Return）とクラス構成は共通。
+   Stellar Blade テーマ（ダーク）
+   style.css／blue_archive.css とクラス構成は共通、差分は変数のみ。
    ===================================================== */
 
 :root {
-  --body-bg:
-    radial-gradient(ellipse at 85% 5%, rgba(255,255,255,0.95), transparent 45%),
-    linear-gradient(180deg, #a6e4fa 0%, #e0f5ff 38%, #f8fcff 100%);
-  --text: #254d68;
-  --muted: #678da6;
-  --accent: #159cdb;
-  --accent-strong: #0875b4;
-  --panel-bg: rgba(255,255,255,0.82);
-  --panel-border: rgba(255,255,255,0.95);
-  --panel-shadow: 0 12px 32px rgba(35,140,203,0.13);
-  --field-bg: #e8f6ff;
-  --field-border: #78bfe8;
-  --field-text: #174c70;
-  --placeholder: #527e9c;
-  --chip-bg: rgba(255,255,255,0.92);
-  --chip-border: #9bd9f5;
-  --chip-active-bg: #dff5ff;
-  --grid-bg: rgba(255,255,255,0.58);
-  --grid-border: rgba(255,255,255,0.85);
-  --hero-image: url("images/bluearchive-bg.jpg");
-  --hero-grad: linear-gradient(90deg, rgba(28,113,165,0.65), rgba(80,190,235,0.12), rgba(30,125,185,0.35));
-  --modal-overlay: rgba(19,58,92,0.68);
-  --modal-bg: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(227,246,255,0.98));
-  --modal-border: rgba(110,205,245,0.75);
-  --modal-shadow: 0 0 35px rgba(90,190,245,0.28), 0 18px 50px rgba(20,70,110,0.22);
-  --footer-bg: #eaf7ff;
-  --footer-border: #c8e6f5;
-  --footer-link: #547d97;
-  --footer-active-bg: #d9f0fc;
-  --footer-active-border: #9bcfea;
-  --tag-bg: #e0f4ff;
-  --tag-text: #287aa7;
-  --tag-border: #a6d8ef;
+  --body-bg: linear-gradient(180deg, #1a1e26 0%, #10141a 40%, #0a0d11 100%);
+  --text: #ece7dc;
+  --muted: #9aa3ad;
+  --accent: #d9b36c;
+  --accent-strong: #d9b36c;
+  --panel-bg: rgba(16, 20, 26, 0.85);
+  --panel-border: rgba(217, 179, 108, 0.32);
+  --panel-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  --field-bg: rgba(255, 255, 255, 0.12);
+  --field-border: rgba(217, 179, 108, 0.4);
+  --field-text: #ffffff;
+  --placeholder: rgba(236, 231, 220, 0.65);
+  --chip-bg: #f5efdf;
+  --chip-border: #c9b586;
+  --chip-active-bg: #eed9a4;
+  --grid-bg: rgba(255,255,255,0.06);
+  --grid-border: rgba(255,255,255,0.1);
+  --hero-image: url("../images/stellarblade-bg.jpg");
+  --hero-grad: linear-gradient(90deg, rgba(8, 10, 13, 0.8), rgba(8, 10, 13, 0.3), rgba(8, 10, 13, 0.65));
+  --modal-overlay: rgba(4, 5, 7, 0.88);
+  --modal-bg: linear-gradient(180deg, rgba(23,27,34,0.97), rgba(12,14,18,0.98));
+  --modal-border: rgba(217,179,108,0.5);
+  --modal-shadow: 0 0 30px rgba(217,179,108,0.18), 0 18px 50px rgba(0,0,0,0.5);
+  --footer-bg: #0d1015;
+  --footer-border: rgba(217,179,108,0.3);
+  --footer-link: #c9c2b2;
+  --footer-active-bg: rgba(217,179,108,0.22);
+  --footer-active-border: #d9b36c;
+  --tag-bg: rgba(217,179,108,0.16);
+  --tag-text: #ecd9a8;
+  --tag-border: rgba(217,179,108,0.45);
 }
 
 * { box-sizing: border-box; }
@@ -682,3 +680,22 @@ select option { background: #fff; color: var(--field-text); }
 @media (min-width: 700px) {
   .footer-link { font-size: 12px; padding: 8px 14px; }
 }
+
+/* ERテーマ固有：明色チップ上の文字色 */
+.cost-chip, .nav-btn, .view-btn, .keyword-chip { color: #3a2f10; }
+.color-btn { color: #3a2f10; }
+.color-btn.fire { color: #e6462e; }
+.color-btn.green { color: #249c61; }
+.color-btn.purple { color: #8650d3; }
+.color-btn.blue { color: #238ccc; }
+.color-btn.yellow { color: #bd8700; }
+.view-btn.active, .cost-chip.active, .keyword-chip.active { color: #ffffff; background: #b8860b; border-color: #b8860b; }
+.filter-toggle { color: #3a2f10; }
+.filter-badge { background: #b8860b; }
+.card-grid[data-view="list"] .card { background: rgba(255,255,255,0.08); }
+.card-fallback { background: rgba(255,255,255,0.08); }
+.card-thumb img { background: rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.35); }
+.load-error { background: #4a1520; color: #ffc9c9; }
+input:focus, select:focus { background: rgba(255,255,255,0.2); }
+select option { background: #081024; color: #ffffff; }
+.close-btn { color: var(--accent); }

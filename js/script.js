@@ -66,11 +66,18 @@ return tokens.every(token => target.includes(token));
 const currentTitle = document.body.dataset.title;
 
 const titleFiles = {
-"eternal-return": ["data/Eternal_Return.json"],
-"blue_archive": ["data/blue_archive.json"]
+"eternal-return": ["../../data/Eternal_Return.json"],
+"blue_archive": ["../../data/blue_archive.json"],
+"stellar_blade": ["../../data/stellar_blade.json"]
 };
 
 const cardFiles = titleFiles[currentTitle] || [];
+// 画像パスは data/*.json 側の表記（images/... でも ../images/... でも）に依らず、
+// titles/<title>/ から見た ../../images/... にそろえる
+function resolveImagePath(p) {
+  return "../../" + String(p || "").replace(/^(\.\.\/)+/, "");
+}
+
 
 Promise.all(
 cardFiles.map(async file => {
@@ -95,7 +102,7 @@ type: card.type || "",
 text: card.text || "",
 keywords: extractKeywordBases(card.text),
 flavor: card.flavor || "",
-image: card.image || ""
+image: resolveImagePath(card.image)
 }));
 
 createAffiliationOptions();

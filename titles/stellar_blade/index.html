@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Eternal Returnのカードを名前・効果・番号から検索できるカードデータベース">
-  <meta name="theme-color" content="#182b5f">
-  <title>Eternal Return カード検索 | ER Localization</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="ステラブレイドのカードを名前・効果・番号・所属から検索できるカードデータベース">
+  <meta name="theme-color" content="#10141a">
+  <title>ステラブレイド カード検索 | Stellar Blade Card Database</title>
+  <link rel="stylesheet" href="../../css/stellar_blade.css">
 </head>
-<body data-title="eternal-return">
+<body data-title="stellar_blade">
 
 <header>
   <div class="hero-banner">
     <div class="hero-overlay">
-      <h1>ER Localization</h1>
-      <p>Eternal Return Card Database</p>
+      <h1>Stellar Blade</h1>
+      <p>Stellar Blade Card Database</p>
     </div>
   </div>
 </header>
@@ -23,7 +23,7 @@
   <section class="search-panel" aria-label="カード検索">
     <div class="keyword-row">
       <label class="sr-only" for="keywordSearchBox">フリーワード検索</label>
-      <input type="search" id="keywordSearchBox" placeholder="名前・効果・番号で検索" autocomplete="off" enterkeyhint="search">
+      <input type="search" id="keywordSearchBox" placeholder="名前・効果・番号・所属で検索" autocomplete="off" enterkeyhint="search">
       <button type="button" id="filterToggle" class="filter-toggle" aria-expanded="false" aria-controls="advancedFilters">
         絞り込み<span id="filterBadge" class="filter-badge" hidden></span>
       </button>
@@ -59,7 +59,7 @@
       <label class="sr-only" for="textSearchBox">カードテキストで検索</label>
       <input type="search" id="textSearchBox" placeholder="カードテキストで検索" autocomplete="off">
       <label class="sr-only" for="codeSearchBox">カード番号で検索</label>
-      <input type="search" id="codeSearchBox" placeholder="カード番号で検索 例：BT05-001" autocomplete="off">
+      <input type="search" id="codeSearchBox" placeholder="カード番号で検索 例：BT07-001" autocomplete="off">
 
       <div class="and-filters">
         <select id="typeFilter" aria-label="カードタイプ">
@@ -113,9 +113,10 @@
 
 <footer class="site-footer">
   <nav class="footer-nav">
-    <a href="index.html" class="footer-link">TOP</a>
-    <a href="eternal_return.html" class="footer-link active">ETERNAL RETURN</a>
-    <a href="blue_archive.html" class="footer-link">BLUE ARCHIVE</a>
+    <a href="../../index.html" class="footer-link">TOP</a>
+    <a href="../eternal_return/" class="footer-link">ETERNAL RETURN</a>
+    <a href="../blue_archive/" class="footer-link">BLUE ARCHIVE</a>
+    <a href="../stellar_blade/" class="footer-link active">STELLAR BLADE</a>
   </nav>
 </footer>
 
@@ -149,6 +150,6 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="../../js/script.js"></script>
 </body>
 </html>

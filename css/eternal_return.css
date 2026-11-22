@@ -22,7 +22,7 @@
   --chip-active-bg: #ffeeb0;
   --grid-bg: rgba(255,255,255,0.06);
   --grid-border: rgba(255,255,255,0.1);
-  --hero-image: url("images/hero-bg.jpg");
+  --hero-image: url("../images/hero-bg.jpg");
   --hero-grad: linear-gradient(90deg, rgba(4, 10, 30, 0.75), rgba(4, 10, 30, 0.25), rgba(4, 10, 30, 0.65));
   --modal-overlay: rgba(3, 8, 18, 0.88);
   --modal-bg: linear-gradient(180deg, rgba(8,20,52,0.97), rgba(4,10,30,0.98));
